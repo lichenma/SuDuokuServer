@@ -44,12 +44,24 @@ io.on('connection', (socket) => {
     });
 
     socket.on('sendMoves', (moves, callback) => {
-        const user = getUser(socket.id);  
+        const user = getUser(socket.id); 
+        
+        if (!user){
+            console.log("no user found for socket: " + socket.id);
+            return; 
+        }
+
         io.to(user.room).emit('game', { room: user.room, moves: updateGame({ room: user.room, moves: moves }) });
     }); 
 
     socket.on('sendSelected', (select, callback) => {
         const user = getUser(socket.id)
+
+        if (!user){
+            console.log("no user found for socket: " + socket.id);
+            return;
+        }
+
         socket.broadcast.emit('select', { room: user.room, select: select}); 
     })
 
