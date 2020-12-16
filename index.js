@@ -70,6 +70,7 @@ io.on('connection', (socket) => {
         const user = removeUser(socket.id); 
 
         if (user) {
+            console.log('user left: ' + user.name);
             io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
         }
     })
