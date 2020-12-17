@@ -24,8 +24,9 @@ const io = socketio(server, {
 
 
 io.on('connection', (socket) => {
-    console.log("user has joined")
+    console.log("connection received")
     socket.on('join', ({ name, room}, callback) => {
+        console.log("user has joined: " + name);
         const { error, user } = addUser({ id: socket.id, name, room }); 
         if (error){
             return callback(error); 
@@ -34,9 +35,7 @@ io.on('connection', (socket) => {
         socket.join(user.room); 
         
         if (existingGame(user.room)) {
-            console.log(getGame(user.room))
             socket.emit('game', { room: user.room, moves: getGame(user.room) });
-            console.log(getGame(user.room));
         }
 
         io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
@@ -67,6 +66,10 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         console.log("user has left")
+
+        /*
+         * handle case of accidental user disconnection   
+         */
         const user = removeUser(socket.id); 
 
         if (user) {
