@@ -4,7 +4,7 @@ const games = []
 const addGame = ({ room, moves }) => {
     room = room.trim().toLowerCase(); 
     const game = { room , moves }; 
-
+    console.log("Adding Game room: " + room);
     games.push(game); 
 
     return { game }; 
@@ -33,6 +33,7 @@ const removeGame = (room) => {
     const index = games.findIndex((game) => game.room === room); 
     // when the last user leaves we should clear the room data 
     if (index !== -1){
+        console.log("Last User Left - Removing Game: " + room);
         return games.splice(index, 1)[0]; 
     }
 }

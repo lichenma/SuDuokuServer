@@ -13,6 +13,7 @@ const addUser = ({ id, name, room}) => {
     }
 
     if (getUsersInRoom(room).length>=2){
+        console.log(users);
         return { error: 'Game is currently created to support at most two players' }
     }
 
@@ -21,7 +22,7 @@ const addUser = ({ id, name, room}) => {
     }
      
     const user = { id, name, room }; 
-
+    console.log("Adding User: " + name); 
     users.push(user); 
 
     return { user }; 
@@ -30,6 +31,7 @@ const addUser = ({ id, name, room}) => {
 const removeUser = (id) => {
     const index = users.findIndex((user) => user.id === id); 
     if (index !== -1){
+        console.log("Removing User: " + getUser(index).name);
         if (getUsersInRoom(getUser(id).room).length === 1){
             // clear the game data 
             removeGame(getUser(id).room);
