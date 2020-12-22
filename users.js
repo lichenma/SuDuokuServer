@@ -31,7 +31,7 @@ const addUser = ({ id, name, room}) => {
 const removeUser = (id) => {
     const index = users.findIndex((user) => user.id === id); 
     if (index !== -1){
-        console.log("Removing User: " + getUser(index).name);
+        console.log("Removing User: " + getUser(id).name);
         if (getUsersInRoom(getUser(id).room).length === 1){
             // clear the game data 
             removeGame(getUser(id).room);
