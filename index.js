@@ -25,6 +25,7 @@ const io = socketio(server, {
 
 io.on('connection', (socket) => {
     console.log("connection received")
+
     socket.on('join', ({ name, room}, callback) => {
         console.log("user has joined: " + name);
         const { error, user } = addUser({ id: socket.id, name, room }); 
@@ -65,11 +66,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-        console.log("user has left")
-
-        /*
-         * handle case of accidental user disconnection   
-         */
         const user = removeUser(socket.id); 
 
         if (user) {
